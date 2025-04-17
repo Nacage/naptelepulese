@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nap települése</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <!-- Leaflet JavaScript (after CSS) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Font Awesome for YouTube icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #map-container {
+            flex: 1;
+            height: 100%;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #locations-panel {
+            width: 300px;
+            height: 100vh;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding: 15px 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        #locations-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            scrollbar-width: thin;
+        }
+
+        #locations-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #locations-list::-webkit-scrollbar-thumb {
+            background-color: #aaa;
+            border-radius: 3px;
+        }
+
+        .location-item {
+            padding: 5 px;
+            margin-bottom: 10px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .location-item:hover {
+            background-color: #e9e9e9;
+        }
+
+        .location-info {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .episode-number {
+            display: inline-flex;
+            background-color: #3388ff;
+            color: white;
+            border-radius: 5%;
+            width: 40px;
+            height: 40px;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .location-name {
+            font-weight: bold;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            margin-top: 5px;
+        }
+
+        #loading {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .error {
+            color: red;
+            padding: 10px;
+            background-color: #ffeeee;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .popup-content a {
+            color: #3388ff;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .popup-content a:hover {
+            text-decoration: underline;
+        }
+
+        .youtube-icon {
+            color: #FF0000;
+            margin-right: 5px;
+        }
+
+        .youtube-link {
+            display: flex;
+            align-items: center;
+            margin-top: 8px;
+        }
+
+        .youtube-btn {
+            background: none;
+            border: none;
+            color: #FF0000;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        .youtube-btn:hover {
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+
+        #cookie-popup {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: 400px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+        }
+    </style>
+    <style>
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 1);
+            /* translucent black */
+            z-index: 9999;
+            pointer-events: auto;
+            /* ensures it blocks clicks */
+            transition: opacity 2.0s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #overlay button {
+            z-index: 2;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            background-color: rgba(0, 123, 255, 0.8);
+            color: white;
+            cursor: pointer;
+        }
+
+        #overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #overlay img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="overlay">
+        <img src="media/naptelepulese.png" alt="Loading..." />
+        <button id="start-btn">Start</button>
+    </div>
+
+    <audio id="bg-music" src="media/naptelepulese.mp3"></audio>
+
+    <!--div id="cookie-popup">
+        <p>We use cookies to improve your experience. By using our site, you agree to our cookie policy.</p>
+        <button id="accept-cookies">Accept</button>
+    </div-->
+
+    <script>
+        window.addEventListener('load', () => {
+            document.getElementById('start-btn').addEventListener('click', () => {
+                const audio = document.getElementById('bg-music');
+                initMap();
+                fadeOutOverlay();
+                //                document.getElementById("overlay").remove();
+                audio.play().catch((error) => {
+                    console.log('Autoplay failed:', error);
+                });
+            });
+        });
+
+        function fadeOutOverlay() {
+            const overlay = document.getElementById('overlay');
+            overlay.classList.add('fade-out');
+
+            // Optional: remove it completely after fade
+            setTimeout(() => {
+                overlay.remove();
+            }, 2000); // match transition duration
+        }
+    </script>
+
+
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+
+    <div id="locations-panel">
+        <div class="panel-header">
+            <h1>Nap települése</h1>
+        </div>
+        <div id="locations-list">
+            <div id="loading">Loading locations...</div>
+        </div>
+    </div>
+
+    <script>
+
+        function initMap() {
+            // Load locations from JSON file
+            fetch('locations.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(locations => {
+                    // Hide loading message
+                    loadingElement.style.display = 'none';
+
+                    // Display the locations
+                    displayLocations(locations);
+                })
+                .catch(error => {
+                    // Handle errors
+                    loadingElement.style.display = 'none';
+
+                    const errorElement = document.createElement('div');
+                    errorElement.className = 'error';
+                    errorElement.textContent = `Failed to load locations: ${error.message}`;
+                    locationsList.appendChild(errorElement);
+
+                    console.error('Error loading locations:', error);
+                });
+
+            // Initialize the map centered on Hungary
+            const map = L.map('map').setView([47.1625, 19.5033], 7);
+
+            // Add OpenStreetMap tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            const locationsList = document.getElementById('locations-list');
+            const loadingElement = document.getElementById('loading');
+            const markers = {};
+
+            // Function to create markers and populate the list
+            function displayLocations(locations) {
+                // Clear any existing content
+                locationsList.innerHTML = '';
+
+                // Sort locations by episode number
+                locations.sort((a, b) => a.episodeNumber - b.episodeNumber);
+
+                locations.forEach(location => {
+                    // Create popup content with link and episode number
+                    const popupContent = `
+                    <div class="popup-content">
+                        <b>${location.name}</b><br>
+                        Episode: #${location.episode}
+                        <div class="youtube-link">
+                            <a href="${location.link}" target="_blank">
+                                <i class="fab fa-youtube youtube-icon"></i>
+                                Watch on YouTube
+                            </a>
+                        </div>
+                    </div>
+                `;
+
+                    // Create marker
+                    const marker = L.marker([location.lat, location.lng])
+                        .addTo(map)
+                        .bindPopup(popupContent);
+
+                    markers[location.name] = marker;
+
+                    // Create list item
+                    const listItem = document.createElement('div');
+                    listItem.className = 'location-item';
+
+                    // Create location info (episode number, name, and date)
+                    const locationInfo = document.createElement('div');
+                    locationInfo.className = 'location-info';
+                    locationInfo.innerHTML = `
+                    <span class="episode-number" style="font-weight: bold; color: blue;">#${location.episode}</span>
+                    <span class="location-name">${location.name}</span>
+                    <!--span class="location-date">${location.date}</span-->
+                `;
+
+                    // Create YouTube button
+                    const youtubeBtn = document.createElement('a');
+                    youtubeBtn.className = 'youtube-btn';
+                    youtubeBtn.href = location.link;
+                    youtubeBtn.target = '_blank';
+                    youtubeBtn.innerHTML = '<i class="fab fa-youtube"></i>';
+                    youtubeBtn.title = 'Watch on YouTube';
+
+                    // Prevent the YouTube button click from triggering the list item click
+                    youtubeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+
+                    // Add elements to list item
+                    listItem.appendChild(locationInfo);
+                    listItem.appendChild(youtubeBtn);
+
+                    // Add click event to center map on this location
+                    listItem.addEventListener('click', () => {
+                        map.setView([location.lat, location.lng], 12);
+                        marker.openPopup();
+                    });
+
+                    locationsList.appendChild(listItem);
+                });
+            }
+        }
+
+    </script>
+</body>
+
+</html>
+</body>
+
+</html>
