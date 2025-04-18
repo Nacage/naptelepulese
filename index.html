@@ -203,14 +203,12 @@
         #overlay button {
             z-index: 2;
             padding: 12px 24px;
-            transform: translate(-50%, -50%);
             font-size: 1.5em;
+            margin-top: 15%;
             border-color: black;
             border-width: 2px;
             border-radius: 8px;
-            margin-top: 15%;
-            background-color: rgba(0, 123, 255, 0.5);
-            backdrop-filter: blur(4px);
+            background-color: rgba(0, 123, 255, 0.9);
             color: white;
             cursor: pointer;
         }
@@ -441,7 +439,7 @@
             muteButton.textContent = audio.muted ? '🔇' : '🔊';
         });
 
-        let clickSoundCount=3;
+        let clickSoundCount=9;
         let currentAudio = null;
 
         function playRandomSound() {
