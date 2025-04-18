@@ -240,6 +240,14 @@
     "link": "https://youtu.be/RS3S5gkywwk?t=16"
   },
   {
+    "name": "Szólád",
+    "lat": 46.78600482707195,
+    "lng": 17.839964549552832,
+    "date": "2024-07-18",
+    "episode": "363",
+    "link": "https://youtu.be/k451Xe56niQ?t=95"
+  },
+  {
     "name": "Gönc",
     "lat": 48.473119568841895,
     "lng": 21.273225154568667,
@@ -272,7 +280,7 @@
     "link": "https://youtu.be/_t0jDY0ToIs?t=22"
   },
   {
-    "name": "12.kerület",
+    "name": "Budapest XII. ker.",
     "lat": 47.51060387115805,
     "lng": 18.980769918821146,
     "date": "2024-06-13",
@@ -280,9 +288,17 @@
     "link": "https://youtu.be/rKEcNdevObQ?t=15"
   },
   {
+    "name": "Kiskőrös",
+    "lat": 46.62096822912774,
+    "lng": 19.285444332206986,
+    "date": "2024-05-30",
+    "episode": "330",
+    "link": "https://youtu.be/5HeOQE8YFbE?t=91"
+  },
+  {
     "name": "Bélmegyer",
-    "lat":46.87238990050253,
-    "lng":  21.18297629641797,
+    "lat": 46.87238990050253,
+    "lng": 21.18297629641797,
     "date": "2024-05-23",
     "episode": "325",
     "link": "https://youtu.be/n587-UtiERg?t=16"
@@ -320,6 +336,14 @@
     "date": "2024-04-05"
   },
   {
+    "name": "Kapoly",
+    "lat": 46.724974942547504,
+    "lng": 17.972866070606006,
+    "link": "https://youtu.be/0sSAm7EPu38?t=78",
+    "episode": "286",
+    "date": "2024-03-23"
+  },
+  {
     "name": "Pilis",
     "lat": 47.2855,
     "lng": 19.5480,
@@ -328,11 +352,139 @@
     "date": "2024-02-10"
   },
   {
+    "name": "Zsombó",
+    "lat": 46.32454381142973,
+    "lng": 19.978262050333832,
+    "link": "https://youtu.be/n8vpJ73BtoY?t=20",
+    "episode": "254",
+    "date": "2024-02-03"
+  },
+  {
+    "name": "Ipacsfa",
+    "lat": 45.83421498498406,
+    "lng": 18.20514824224081,
+    "link": "https://youtu.be/4xUs9G-b3ZE?t=17",
+    "episode": "249",
+    "date": "2024-01-27"
+  },
+  {
+    "name": "Gádoros",
+    "lat": 46.664096803949924,
+    "lng": 20.59314515703684,
+    "link": "https://youtu.be/Wt2A_dHyrIg?t=16",
+    "episode": "248",
+    "date": "2024-01-26"
+  },
+  {
     "name": "Kiskunmajsa",
     "lat": 46.492277347835966,
     "lng": 19.736721046490587,
     "link": "https://youtu.be/XoN3J80plYQ?t=68",
     "episode": "235",
     "date": "2023-12-15"
+  },
+  {
+    "name": "Kisbárapáti",
+    "lat": 46.60511333910735,
+    "lng": 17.86507602313008,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Nagybajom",
+    "lat": 46.39038865133711,
+    "lng": 17.50932390734026,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Dombóvár",
+    "lat": 46.3780893279291,
+    "lng": 18.138414890125482,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Sásd",
+    "lat": 46.252690623281666,
+    "lng": 18.106678526033505,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Zalakaros",
+    "lat": 46.556475098896364,
+    "lng": 17.121341114895433,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Sümeg",
+    "lat": 46.9745056803606,
+    "lng": 17.284079491943352,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Tapolca",
+    "lat": 46.880781298805516,
+    "lng": 17.439172209136444,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Nagyvázsony",
+    "lat": 46.98045733577105,
+    "lng": 17.693598674929937,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Perkáta",
+    "lat": 47.044555227635705,
+    "lng": 18.78621503648801,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Tatárszentgyörgy",
+    "lat": 47.075708003223525,
+    "lng": 19.367249708589434,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Kunbaracs",
+    "lat": 46.98560108222411,
+    "lng": 19.3908108473765,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Kiskunfélegyháza",
+    "lat": 46.70382810439533,
+    "lng": 19.85004351100692,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
+  },
+  {
+    "name": "Kétpó",
+    "lat": 47.073959938935744,
+    "lng": 20.479898604223813,
+    "link": "https://youtu.be/5jGUon9QbCg?t=255",
+    "episode": "231",
+    "date": "2023-12-09"
   }
 ]
