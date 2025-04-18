@@ -232,7 +232,7 @@
             position: fixed;
             top: 1rem;
             right: 1rem;
-            font-size: 1.5rem;
+            font-size: 1rem;
             background: rgba(0, 0, 0, 0.5);
             color: white;
             border: none;
@@ -273,20 +273,6 @@
                 overlay.remove();
             }, 2000); // match transition duration
         }
-
-        const muteButton = document.getElementById('muteButton');
-
-        // Load mute setting from localStorage
-        const isMuted = localStorage.getItem('muted') === 'true';
-        audio.muted = isMuted;
-        muteButton.textContent = isMuted ? '🔇' : '🔊';
-
-        // Toggle mute state
-        muteButton.addEventListener('click', () => {
-            audio.muted = !audio.muted;
-            localStorage.setItem('muted', audio.muted);
-            muteButton.textContent = audio.muted ? '🔇' : '🔊';
-        });
     </script>
 
 
@@ -393,6 +379,10 @@
                         .addTo(map)
                         .bindPopup(popupContent);
 
+                    marker.on('click', () => {
+                        playRandomSound();
+                    });
+
                     markers[location.name] = marker;
 
                     // Create list item
@@ -426,6 +416,7 @@
 
                     // Add click event to center map on this location
                     listItem.addEventListener('click', () => {
+                        playRandomSound();
                         map.setView([location.lat, location.lng], 12);
                         marker.openPopup();
                     });
@@ -435,6 +426,31 @@
             }
         }
 
+        const audio = document.getElementById('bg-music');
+        const muteButton = document.getElementById('muteButton');
+
+        // Load mute setting from localStorage
+        const isMuted = localStorage.getItem('muted') === 'true';
+        audio.muted = isMuted;
+        muteButton.textContent = isMuted ? '🔇' : '🔊';
+
+        // Toggle mute state
+        muteButton.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            localStorage.setItem('muted', audio.muted);
+            muteButton.textContent = audio.muted ? '🔇' : '🔊';
+        });
+
+        let clickSoundCount=3;
+        let currentAudio = null;
+
+        function playRandomSound() {
+            if (audio.muted) return;
+            if (currentAudio) currentAudio.pause();
+            const file = 'media/click'+Math.floor(Math.random() * clickSoundCount)+'.mp3';
+            currentAudio = new Audio(file);
+            currentAudio.play();
+        }
     </script>
 </body>
 
