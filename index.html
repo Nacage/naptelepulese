@@ -181,7 +181,6 @@
         .youtube-btn:hover {
             background-color: rgba(255, 0, 0, 0.1);
         }
-
     </style>
     <style>
         #overlay {
@@ -204,10 +203,14 @@
         #overlay button {
             z-index: 2;
             padding: 12px 24px;
-            font-size: 1.1rem;
-            border: none;
+            transform: translate(-50%, -50%);
+            font-size: 1.5em;
+            border-color: black;
+            border-width: 2px;
             border-radius: 8px;
-            background-color: rgba(0, 123, 255, 0.8);
+            margin-top: 15%;
+            background-color: rgba(0, 123, 255, 0.5);
+            backdrop-filter: blur(4px);
             color: white;
             cursor: pointer;
         }
@@ -223,6 +226,20 @@
             height: 100%;
             object-fit: contain;
             z-index: 1;
+        }
+
+        #muteButton {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 0.6em;
+            cursor: pointer;
+            z-index: 9999;
         }
     </style>
 </head>
@@ -266,6 +283,7 @@
     <div id="locations-panel">
         <div class="panel-header">
             <h1>Nap települése</h1>
+            <button id="muteButton" title="Mute / Unmute">🔊</button>
         </div>
         <div id="locations-list">
             <div id="loading">Loading locations...</div>
@@ -361,6 +379,10 @@
                         .addTo(map)
                         .bindPopup(popupContent);
 
+                    marker.on('click', () => {
+                        playRandomSound();
+                    });
+
                     markers[location.name] = marker;
 
                     // Create list item
@@ -394,6 +416,7 @@
 
                     // Add click event to center map on this location
                     listItem.addEventListener('click', () => {
+                        playRandomSound();
                         map.setView([location.lat, location.lng], 12);
                         marker.openPopup();
                     });
@@ -403,6 +426,31 @@
             }
         }
 
+        const audio = document.getElementById('bg-music');
+        const muteButton = document.getElementById('muteButton');
+
+        // Load mute setting from localStorage
+        const isMuted = localStorage.getItem('muted') === 'true';
+        audio.muted = isMuted;
+        muteButton.textContent = isMuted ? '🔇' : '🔊';
+
+        // Toggle mute state
+        muteButton.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            localStorage.setItem('muted', audio.muted);
+            muteButton.textContent = audio.muted ? '🔇' : '🔊';
+        });
+
+        let clickSoundCount=3;
+        let currentAudio = null;
+
+        function playRandomSound() {
+            if (audio.muted) return;
+            if (currentAudio) currentAudio.pause();
+            const file = 'media/click'+Math.floor(Math.random() * clickSoundCount)+'.mp3';
+            currentAudio = new Audio(file);
+            currentAudio.play();
+        }
     </script>
 </body>
 
