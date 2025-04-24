@@ -319,7 +319,7 @@
                 });
 
             // Initialize the map centered on Hungary
-            const map = L.map('map').setView([47.1625, 19.5033], 7);
+            const map = L.map('map').setView([47.1625, 19.5033], 8);
 
             // Add OpenStreetMap tile layer
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -415,7 +415,12 @@
                     // Add click event to center map on this location
                     listItem.addEventListener('click', () => {
                         playRandomSound();
-                        map.setView([location.lat, location.lng], 12);
+                        map.flyTo([location.lat, location.lng], 12,
+                            {
+                                animate: true,
+                                duration: 2
+                            });
+                        //map.setView([location.lat, location.lng], 12);
                         marker.openPopup();
                     });
 
@@ -439,13 +444,13 @@
             muteButton.textContent = audio.muted ? '🔇' : '🔊';
         });
 
-        let clickSoundCount=10;
+        let clickSoundCount = 10;
         let currentAudio = null;
 
         function playRandomSound() {
             if (audio.muted) return;
             if (currentAudio) currentAudio.pause();
-            const file = 'media/click'+Math.floor(Math.random() * clickSoundCount)+'.mp3';
+            const file = 'media/click' + Math.floor(Math.random() * clickSoundCount) + '.mp3';
             currentAudio = new Audio(file);
             currentAudio.play();
         }
