@@ -1,8 +1,16 @@
 [
   {
+    "name": "Tiszadob",
+    "lat": 48.005564960188,
+    "lng": 21.170896785478472,
+    "date": "2025-05-15",
+    "episode": "523",
+    "link": "https://youtu.be/5AEH9ZyI1nI?t=85"
+  },
+  {
     "name": "Hunya",
     "lat": 46.81286974008315,
-    "lng":  20.84634644692552,
+    "lng": 20.84634644692552,
     "date": "2025-05-08",
     "episode": "518",
     "link": "https://youtu.be/ohB39DXPmeQ?t=176"
