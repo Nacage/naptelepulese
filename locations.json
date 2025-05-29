@@ -1,5 +1,21 @@
 [
   {
+    "name": "Folyás",
+    "lat": 47.80807183474453, 
+    "lng": 21.136743175447858,
+    "date": "2025-05-29",
+    "episode": "532",
+    "link": "https://youtu.be/VgRu0clV5X8?t=104"
+  },
+  {
+    "name": "Nagyvárad",
+    "lat": 47.055879625583906,
+    "lng":  21.91855340334425,
+    "date": "2025-05-22",
+    "episode": "528",
+    "link": "https://youtu.be/N0D79-aSiHM?t=784"
+  },
+  {
     "name": "Tiszadob",
     "lat": 48.005564960188,
     "lng": 21.170896785478472,
